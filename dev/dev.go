@@ -22,7 +22,7 @@ const timeFormat = "2006-01-02 15:04:05"
 // Setup sets the logging end error defaults
 func Setup() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	zl.Logger = zl.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: zerolog.TimeFieldFormat})
+	zl.Logger = zl.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: timeFormat})
 
 	log.SetFlags(0)
 	log.SetOutput(zl.Logger)
