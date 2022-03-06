@@ -19,42 +19,13 @@ var (
 
 const timeFormat = "2006-01-02 15:04:05"
 
-func main() {
+// Setup sets the logging end error defaults
+func Setup() {
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	zl.Logger = zl.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: zerolog.TimeFieldFormat})
 
 	log.SetFlags(0)
 	log.SetOutput(zl.Logger)
-
-	log.Println("asdf")
-
-	zl.Info().
-		Str("foo", "bar").
-		Float64("f", 2.22).
-		Msg("Hello world")
-
-	zl.Debug().
-		Str("foo", "bar").
-		Float64("f", 2.22).
-		Msg("Hello world")
-
-	zl.Warn().
-		Str("foo", "bar").
-		Float64("f", 2.22).
-		Msg("Hello world")
-
-	// zl.Error().
-	// 	Str("foo", "bar").
-	// 	Float64("f", 2.22).
-	// 	Msg("Hello world")
-
-	err := er.New("error bad request")
-	err = er.Wrapf(err, "this is a level 2 error '%v'", "oupss")
-	err = er.Wrapf(err, "this is a level 3 error '%v'", "hopa")
-	err = er.Wrapf(err, "this is a top level error '%v'", "hopa")
-
-	Trace(err)
-
 }
 
 // Trace prints a pretty trace of the error
