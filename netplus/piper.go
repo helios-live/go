@@ -15,8 +15,8 @@ type Piper struct {
 	Timeout time.Duration
 }
 
-// New returns a pointer to a new Piper instance
-func New(l log.Logger, t time.Duration) *Piper {
+// NewPiper returns a pointer to a newPiper Piper instance
+func NewPiper(l log.Logger, t time.Duration) *Piper {
 	return &Piper{
 		Logger:  l,
 		Timeout: t,
