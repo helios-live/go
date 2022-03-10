@@ -1,9 +1,11 @@
 package httplus
 
 import (
+	"encoding/base64"
 	"net"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 // GetHostPort returns host and port from a proxy HTTP request
@@ -33,4 +35,23 @@ func CopyHeader(dst, src http.Header) {
 			dst.Add(k, v)
 		}
 	}
+}
+
+// GetAuth decodes the Proxy-Authorization header
+// @param *http.Request
+// @returns []string
+func GetAuth(r *http.Request) []string {
+	s := r.Header.Get("Proxy-Authorization")
+	if s == "" {
+		return nil
+	}
+	ss := strings.Split(s, " ")
+	if ss[0] != "Basic" {
+		return nil
+	}
+	b, err := base64.StdEncoding.DecodeString(ss[1])
+	if err != nil {
+		return nil
+	}
+	return strings.Split(string(b), ":")
 }
