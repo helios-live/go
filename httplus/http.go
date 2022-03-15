@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/rotisserie/eris"
 )
 
 // GetHostPort returns host and port from a proxy HTTP request
@@ -43,15 +45,15 @@ func CopyHeader(dst, src http.Header) {
 func GetAuth(r *http.Request) (ret []string, err error) {
 	s := r.Header.Get("Proxy-Authorization")
 	if s == "" {
-		return ret, err
+		return ret, eris.New("getauth empty header")
 	}
 	ss := strings.Split(s, " ")
 	if ss[0] != "Basic" {
-		return ret, err
+		return ret, eris.New("getauth not basic")
 	}
 	b, err := base64.StdEncoding.DecodeString(ss[1])
 	if err != nil {
-		return ret, err
+		return ret, eris.Wrap(err, "getauth base64decode failed")
 	}
 	return strings.Split(string(b), ":"), nil
 }
