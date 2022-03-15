@@ -40,18 +40,18 @@ func CopyHeader(dst, src http.Header) {
 // GetAuth decodes the Proxy-Authorization header
 // @param *http.Request
 // @returns []string
-func GetAuth(r *http.Request) []string {
+func GetAuth(r *http.Request) (ret []string, err error) {
 	s := r.Header.Get("Proxy-Authorization")
 	if s == "" {
-		return nil
+		return ret, err
 	}
 	ss := strings.Split(s, " ")
 	if ss[0] != "Basic" {
-		return nil
+		return ret, err
 	}
 	b, err := base64.StdEncoding.DecodeString(ss[1])
 	if err != nil {
-		return nil
+		return ret, err
 	}
-	return strings.Split(string(b), ":")
+	return strings.Split(string(b), ":"), nil
 }
