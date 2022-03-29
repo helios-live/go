@@ -6,7 +6,7 @@ import (
 
 	"time"
 
-	"github.com/ideatocode/go/log"
+	"go.ideatocode.tech/log"
 )
 
 // Piper .
